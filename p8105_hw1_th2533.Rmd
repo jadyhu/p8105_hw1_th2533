@@ -16,7 +16,7 @@ library(palmerpenguins)
 ## Problem 1
 Create a data frame with the specified elements
 
-```{r create_df, echo = FALSE}
+```{r create_df}
 prob1_df = 
   tibble(
     samp = rnorm(10),
@@ -40,7 +40,7 @@ mean(pull(prob1_df,factor_vec))
 I can take the means of numeric and logic but not of character and factor.
 
 
-```{r try_numeric, eval = FALSE}
+```{r try_numeric}
 as.numeric(pull(prob1_df,samp))
 as.numeric(pull(prob1_df,samp_gt_0))
 as.numeric(pull(prob1_df,char_vec))
@@ -71,7 +71,7 @@ I can convert the logical vector to a factor and then convert the result to nume
 data("penguins", package = "palmerpenguins")
 
 # get the names/values of the data
-str(penguins)
+penguins
 
 # get the size of the data frame
 row = nrow(penguins)
@@ -82,12 +82,18 @@ mean_flipper = mean(pull(penguins,flipper_length_mm), na.rm = TRUE)
 
 # make a scatterplot of flipper length and bill length
 ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+ggsave("scatter_plot_penguins.pdf", height = 4, width = 6)
 ```
 
 This is a dataset about penguins. 
 
 * It has 8 variables. They include species of the penguins, island they live, their bill lenth, bill depth, flipper length, body mass, sex and year.
+  * There are 5 numeric variables: bill length, bill depth, flipper length, body mass and year and 3 factor variables: species, island, and sex.
 * This data set has `r row` rows and `r col` columns.
-* The mean flipper length for penguins is `r mean_flipper`.
+* The mean flipper length for penguins is `r round(mean_flipper,digits=2)` mm.
+* The scatterplot shows that there is a potential positive linear relationship between bill length and flipper length. There are also significant differences of bill length and flipper length among species. 
+  * Adelie generally have shorter flipper and bill.
+  * Gentoo have longest flipper and bill
+  * Chinstrap has similar bill length as Gentoo but shorter flipper.
 
 
