@@ -6,15 +6,17 @@ output: github_document
 
 This is my solution to HW1
 
-```{r}
+```{r libraries}
 library(tidyverse)
+#install.packages("palmerpenguins")
+library(palmerpenguins)
 ```
 
 
 ## Problem 1
-create a data frame with the specified elements
+Create a data frame with the specified elements
 
-```{r}
+```{r create_df, echo = FALSE}
 prob1_df = 
   tibble(
     samp = rnorm(10),
@@ -25,13 +27,67 @@ prob1_df =
 
 ```
 
+
+Take the mean of each variable in my data frame.
+
+```{r mean_pull}
+mean(pull(prob1_df,samp))
+mean(pull(prob1_df,samp_gt_0))
+mean(pull(prob1_df,char_vec))
+mean(pull(prob1_df,factor_vec))
+```
+
+I can take the means of numeric and logic but not of character and factor.
+
+
+```{r try_numeric, eval = FALSE}
+as.numeric(pull(prob1_df,samp))
+as.numeric(pull(prob1_df,samp_gt_0))
+as.numeric(pull(prob1_df,char_vec))
+as.numeric(pull(prob1_df,factor_vec))
+```
+
+I can change numeric, logic and factor to numeric but not character. 
+We can't take means of a type of data that cannot be converted to numeric.
+
+```{r change_type_multiply}
+as.numeric(pull(prob1_df,samp_gt_0)) * pull(prob1_df,samp)
+as.factor(pull(prob1_df,samp_gt_0)) * pull(prob1_df,samp)
+as.numeric(as.factor(pull(prob1_df,samp_gt_0))) * pull(prob1_df,samp)
+```
+
+I can convert the logical vector to numeric, and multiply the random sample by the result.
+I can't convert the logical vector to a factor, and multiply the random sample by the result.
+I can convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result.
+
+
+
+
 ## Problem 2
 
-I can take the mean of the sample, too!
-The mean is `r mean(samp)`.
-```{r ex1 echo=false}
 
+```{r prob2, echo = FALSE}
 
+data("penguins", package = "palmerpenguins")
 
+# get the names/values of the data
+str(penguins)
+
+# get the size of the data frame
+row = nrow(penguins)
+col = ncol(penguins)
+
+# calculate the mean flipper length
+mean_flipper = mean(pull(penguins,flipper_length_mm), na.rm = TRUE)
+
+# make a scatterplot of flipper length and bill length
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
 ```
+
+This is a dataset about penguins. 
+
+* It has 8 variables. They include species of the penguins, island they live, their bill lenth, bill depth, flipper length, body mass, sex and year.
+* This data set has `r row` rows and `r col` columns.
+* The mean flipper length for penguins is `r mean_flipper`.
+
 
