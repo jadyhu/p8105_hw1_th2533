@@ -87,8 +87,10 @@ ggsave("scatter_plot_penguins.pdf", height = 4, width = 6)
 
 This is a dataset about penguins. 
 
-* It has 8 variables. They include species of the penguins, island they live, their bill lenth, bill depth, flipper length, body mass, sex and year.
-  * There are 5 numeric variables: bill length, bill depth, flipper length, body mass and year and 3 factor variables: species, island, and sex.
+* It has 8 variables: `r ls(penguins)`.
+  * The species variable contains `r unique(pull(penguins,species))`.
+  * The sex variable contains `r unique(pull(penguins,sex))`.
+  * The year variable contains `r unique(pull(penguins,year))`.
 * This data set has `r row` rows and `r col` columns.
 * The mean flipper length for penguins is `r round(mean_flipper,digits=2)` mm.
 * The scatterplot shows that there is a potential positive linear relationship between bill length and flipper length. There are also significant differences of bill length and flipper length among species. 
